@@ -1,8 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 export default function Input({
   text,
   setText,
+  setError,
+  setOutput,
   output,
   lang,
   setLang,
@@ -28,10 +30,12 @@ export default function Input({
     'Portugese',
     'Russian',
   ];
+  const chatRef = useRef(null);
+
   useEffect(() => {
     setCount(count);
     setText(text);
-  }, [text, lang]);
+  }, [text, lang, chatText, output]);
 
   const countWords = (input) => {
     const inputt = localStorage.getItem('inputChat');
@@ -50,14 +54,26 @@ export default function Input({
     setText('');
   };
 
+  const refresh = () => {
+    setText('');
+    setChatText('');
+    localStorage.removeItem('inputChat');
+    setTranslation(false);
+    setOutput(false);
+    setError(false);
+  };
+
   const trans = (lang) => {
     const textOrigin = localStorage.getItem('inputChat');
     translate(lang);
     console.log(textOrigin, lang);
   };
   return (
-    <div className="bg-white/90 text-black/80 h-[550px] w-full">
-      <div className="m-4 flex flex-col items-center justify-center my-[5%] mx-[10%]">
+    <div
+      className="bg-white/90 text-black/80 h-[450px] w-full overflow-auto styled-scrollbar"
+      ref={chatRef}
+    >
+      <div className="p-4 flex flex-col items-center justify-center py-[5%] mx-[10%] ">
         {chatText && (
           <>
             <p className="self-end font-roboto bg-[#f0fff0] shadow-lg rounded-3xl px-6 py-4 w-[80%] sm:w-[50%] text-[14px] leading-8">
@@ -95,9 +111,9 @@ export default function Input({
 
         {translation && (
           <div className=" self-start  shadow-lg bg-[#00fa9a] font-roboto font-medium rounded-2xl px-6 py-4 ">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 justify-center">
               <select
-                className="mr-4 border rounded-lg py-[2px] outline-none"
+                className="border rounded-lg py-[2px] outline-none"
                 value={lang}
                 onChange={(e) => setLang(e.target.value)}
               >
@@ -147,7 +163,7 @@ export default function Input({
           </div>
         )}
         {output && (
-          <div className="self-end my-4 w-[50%]">
+          <div className="self-end my-4 w-[80%] sm:w-[50%]">
             <p className="font-roboto bg-[#f0fff0]  shadow-lg leading-8 rounded-3xl px-6 py-4 text-[14px]">
               {output}
             </p>
@@ -157,7 +173,7 @@ export default function Input({
 
       <div className="flex items-center justify-center  w-full h-[550px] relative">
         {!isFocused && (
-          <h3 className="font-bold font-roboto text-3xl -mb-4">
+          <h3 className="font-bold font-roboto text-3xl -mb-4 fixed">
             What text would you like to process today?
           </h3>
         )}
@@ -184,6 +200,17 @@ export default function Input({
             <path d="M13.0001 7.82843V20H11.0001V7.82843L5.63614 13.1924L4.22192 11.7782L12.0001 4L19.7783 11.7782L18.3641 13.1924L13.0001 7.82843Z"></path>
           </svg>
         </button>
+        {text == '' && (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            className="fixed bottom-[8%] left-[27%] w-[30px] z-50 cursor-pointer"
+            onClick={refresh}
+          >
+            <path d="M5.46257 4.43262C7.21556 2.91688 9.5007 2 12 2C17.5228 2 22 6.47715 22 12C22 14.1361 21.3302 16.1158 20.1892 17.7406L17 12H20C20 7.58172 16.4183 4 12 4C9.84982 4 7.89777 4.84827 6.46023 6.22842L5.46257 4.43262ZM18.5374 19.5674C16.7844 21.0831 14.4993 22 12 22C6.47715 22 2 17.5228 2 12C2 9.86386 2.66979 7.88416 3.8108 6.25944L7 12H4C4 16.4183 7.58172 20 12 20C14.1502 20 16.1022 19.1517 17.5398 17.7716L18.5374 19.5674Z"></path>
+          </svg>
+        )}
       </div>
     </div>
   );

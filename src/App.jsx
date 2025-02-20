@@ -311,6 +311,7 @@ export default function App() {
               chatText={chatText}
               setChatText={setChatText}
               setError={setError}
+              setOutput={setOutput}
             />
           }
         />
