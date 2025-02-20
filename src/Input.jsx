@@ -19,11 +19,18 @@ export default function Input({
   setChatText,
 }) {
   const [translation, setTranslation] = useState(false);
-
+  const [isFocused, setIsFocused] = useState(false);
+  const languages = [
+    'French',
+    'English',
+    'Spanish',
+    'Turkish',
+    'Portugese',
+    'Russian',
+  ];
   useEffect(() => {
     setCount(count);
     setText(text);
-    translate(text, lang);
   }, [text, lang]);
 
   const countWords = (input) => {
@@ -43,59 +50,78 @@ export default function Input({
     setText('');
   };
 
+  const trans = (lang) => {
+    const textOrigin = localStorage.getItem('inputChat');
+    translate(lang);
+    console.log(textOrigin, lang);
+  };
   return (
     <div className="bg-white/90 text-black/80 h-[550px] w-full">
       <div className="m-4 flex flex-col items-center justify-center my-[5%] mx-[10%]">
         {chatText && (
           <>
-            <p className="self-end font-roboto bg-black/2 shadow-lg text-black rounded-3xl px-6 py-4 w-[80%] sm:w-[50%] text-[14px] leading-8">
+            <p className="self-end font-roboto bg-[#f0fff0] shadow-lg rounded-3xl px-6 py-4 w-[80%] sm:w-[50%] text-[14px] leading-8">
               {chatText}
             </p>
 
-            <div className="self-start bg-black/10 font-roboto rounded-2xl shadow-lg px-6 py-4 my-4">
+            <div className="self-start bg-[#00fa9a] font-roboto font-medium rounded-2xl shadow-lg px-6 py-4 my-4">
               <p className=" my-4">{`Your text is in ${textLang}`}</p>
-              <p className="mb-2">What will you like to do?</p>
-              <div className="grid grid-cols-2 gap-4">
-                {textLang == 'English' && (
-                  <button
-                    className="border rounded-xl p-2 cursor-pointer"
-                    onClick={() => {
-                      summarizeText(text);
-                    }}
-                  >
-                    Summarize
-                  </button>
-                )}
-                <button
-                  className="border rounded-xl p-2 cursor-pointer"
-                  onClick={() => setTranslation(true)}
-                >
-                  Translate
-                </button>
-              </div>
+              {languages.includes(textLang) && (
+                <>
+                  <p className="mb-2">What will you like to do?</p>
+                  <div className="grid grid-cols-2 gap-4 items-start">
+                    {textLang == 'English' && (
+                      <button
+                        className="border rounded-xl p-2 cursor-pointer"
+                        onClick={() => {
+                          summarizeText(text);
+                        }}
+                      >
+                        Summarize
+                      </button>
+                    )}
+                    <button
+                      className="border rounded-xl p-2 cursor-pointer"
+                      onClick={() => setTranslation(true)}
+                    >
+                      Translate
+                    </button>
+                  </div>
+                </>
+              )}
             </div>
           </>
         )}
 
         {translation && (
-          <div className="flex items-center gap-2 self-start font-roboto shadow-lg bg-black/10 rounded-2xl px-6 py-4 ">
-            <p className="">Choose a language</p>
-            <select
-              className="mr-4 border rounded-lg py-[2px] outline-none"
-              value={lang}
-              onChange={(e) => setLang(e.target.value)}
-            >
-              <option value="English">English</option>
-              <option value="Portugese">Portugese</option>
-              <option value="Spanish">Spanish</option>
-              <option value="Russian">Russian</option>
-              <option value="Turkish">Turkish</option>
-              <option value="French">French</option>
-            </select>
+          <div className=" self-start  shadow-lg bg-[#00fa9a] font-roboto font-medium rounded-2xl px-6 py-4 ">
+            <div className="flex items-center gap-2">
+              <select
+                className="mr-4 border rounded-lg py-[2px] outline-none"
+                value={lang}
+                onChange={(e) => setLang(e.target.value)}
+              >
+                <option>Choose a language</option>
+                <option value="English">English</option>
+                <option value="Portugese">Portugese</option>
+                <option value="Spanish">Spanish</option>
+                <option value="Russian">Russian</option>
+                <option value="Turkish">Turkish</option>
+                <option value="French">French</option>
+              </select>
+            </div>
+            <div className="flex items-center justify-center my-4">
+              <button
+                className="border rounded-xl px-2 py-[4px] cursor-pointer"
+                onClick={() => trans(lang)}
+              >
+                Translate
+              </button>
+            </div>
           </div>
         )}
         {error && (
-          <div className="flex items-center gap-2 self-start font-roboto shadow-lg bg-black/10 rounded-2xl px-6 py-4 my-4">
+          <div className="flex items-center gap-2 self-start shadow-lg bg-[#00fa9a] font-roboto font-medium rounded-2xl px-6 py-4 my-4">
             {count < 150 && textLang == 'English' ? (
               <p>
                 Your text has to be more than <span>150 words</span> to
@@ -115,50 +141,32 @@ export default function Input({
         )}
         {summary && (
           <div className="self-end my-4 w-[50%]">
-            <p className="font-roboto bg-black shadow-lg text-white/90 rounded-3xl px-6 py-4 text-[14px]">
+            <p className="font-roboto bg-[#f0fff0]  shadow-lg  rounded-3xl px-6 py-4 text-[14px]">
               {summary}
             </p>
           </div>
         )}
         {output && (
           <div className="self-end my-4 w-[50%]">
-            <p className="font-roboto bg-black/2 shadow-lg leading-8 text-black rounded-3xl px-6 py-4 text-[14px]">
+            <p className="font-roboto bg-[#f0fff0]  shadow-lg leading-8 rounded-3xl px-6 py-4 text-[14px]">
               {output}
             </p>
-          </div>
-        )}
-        {output && (
-          <div className="self-start bg-black/10 shadow-lg text-black font-roboto rounded-2xl px-6 py-4 my-4">
-            <p className=" my-4">{`Your text is in ${lang}`}</p>
-            <p className="mb-2">What will you like to do?</p>
-            <div className="grid grid-cols-2 gap-4">
-              {lang == 'English' && (
-                <button
-                  className="border rounded-xl p-2 cursor-pointer"
-                  onClick={() => {
-                    summarizeText(text);
-                  }}
-                >
-                  Summarize
-                </button>
-              )}
-              <button
-                className="border rounded-xl p-2 cursor-pointer"
-                onClick={() => setTranslation(true)}
-              >
-                Translate
-              </button>
-            </div>
           </div>
         )}
       </div>
 
       <div className="flex items-center justify-center  w-full h-[550px] relative">
+        {!isFocused && (
+          <h3 className="font-bold font-roboto text-3xl -mb-4">
+            What text would you like to process today?
+          </h3>
+        )}
         <textarea
           className=" h-[150px] w-[50%] border border-black/20 shadow-xl p-6 rounded-4xl bottom-8 outline-none fixed z-50 bg-white "
           placeholder="Type or paste your text here"
           value={text}
           onChange={(e) => setText(e.target.value)}
+          onFocus={() => setIsFocused(true)}
         ></textarea>
 
         <button
