@@ -172,7 +172,7 @@ export default function Input({
       </div>
 
       <div className="flex items-center justify-center  w-full h-[550px] relative">
-        {!isFocused && (
+        {text == '' && (
           <h3 className="font-bold font-roboto text-3xl -mb-4 fixed">
             What text would you like to process today?
           </h3>
