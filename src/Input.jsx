@@ -51,31 +51,30 @@ export default function Input({
             <p className="self-end font-roboto bg-black/2 shadow-lg text-black rounded-3xl px-6 py-4 w-[80%] sm:w-[50%] text-[14px] leading-8">
               {chatText}
             </p>
-          </>
-        )}
-        {chatText && (
-          <div className="self-start bg-black/10 font-roboto rounded-2xl shadow-lg px-6 py-4 my-4">
-            <p className=" my-4">{`Your text is in ${textLang}`}</p>
-            <p className="mb-2">What will you like to do?</p>
-            <div className="grid grid-cols-2 gap-4">
-              {textLang == 'English' && (
+
+            <div className="self-start bg-black/10 font-roboto rounded-2xl shadow-lg px-6 py-4 my-4">
+              <p className=" my-4">{`Your text is in ${textLang}`}</p>
+              <p className="mb-2">What will you like to do?</p>
+              <div className="grid grid-cols-2 gap-4">
+                {textLang == 'English' && (
+                  <button
+                    className="border rounded-xl p-2 cursor-pointer"
+                    onClick={() => {
+                      summarizeText(text);
+                    }}
+                  >
+                    Summarize
+                  </button>
+                )}
                 <button
                   className="border rounded-xl p-2 cursor-pointer"
-                  onClick={() => {
-                    summarizeText(text);
-                  }}
+                  onClick={() => setTranslation(true)}
                 >
-                  Summarize
+                  Translate
                 </button>
-              )}
-              <button
-                className="border rounded-xl p-2 cursor-pointer"
-                onClick={() => setTranslation(true)}
-              >
-                Translate
-              </button>
+              </div>
             </div>
-          </div>
+          </>
         )}
 
         {translation && (
