@@ -47,13 +47,13 @@ export default function Input({
       <div className="m-4 flex flex-col items-center justify-center my-[5%] mx-[10%]">
         {chatText && (
           <>
-            <p className="self-end font-roboto bg-black/2 text-black rounded-3xl px-6 py-4 w-[80%] sm:w-[50%] text-[14px]">
+            <p className="self-end font-roboto bg-black/2 shadow-lg text-black rounded-3xl px-6 py-4 w-[80%] sm:w-[50%] text-[14px] leading-8">
               {chatText}
             </p>
           </>
         )}
         {chatText && (
-          <div className="self-start bg-black/10 font-roboto rounded-2xl px-6 py-4 my-4">
+          <div className="self-start bg-black/10 font-roboto rounded-2xl shadow-lg px-6 py-4 my-4">
             <p className=" my-4">{`Your text is in ${textLang}`}</p>
             <p className="mb-2">What will you like to do?</p>
             <div className="grid grid-cols-2 gap-4">
@@ -78,7 +78,7 @@ export default function Input({
         )}
 
         {translation && (
-          <div className="flex items-center gap-2 self-start font-roboto bg-black/10 rounded-2xl px-6 py-4 ">
+          <div className="flex items-center gap-2 self-start font-roboto shadow-lg bg-black/10 rounded-2xl px-6 py-4 ">
             <p className="">Choose a language</p>
             <select
               className="mr-4 border rounded-lg py-[2px] outline-none"
@@ -95,7 +95,7 @@ export default function Input({
           </div>
         )}
         {error && (
-          <div className="flex items-center gap-2 self-start font-roboto bg-black/10 rounded-2xl px-6 py-4 my-4">
+          <div className="flex items-center gap-2 self-start font-roboto shadow-lg bg-black/10 rounded-2xl px-6 py-4 my-4">
             {count < 150 && textLang == 'English' ? (
               <p>
                 Your text has to be more than <span>150 words</span> to
@@ -115,20 +115,20 @@ export default function Input({
         )}
         {summary && (
           <div className="self-end my-4 w-[50%]">
-            <p className="font-roboto bg-black text-white/90 rounded-3xl px-6 py-4 text-[14px]">
+            <p className="font-roboto bg-black shadow-lg text-white/90 rounded-3xl px-6 py-4 text-[14px]">
               {summary}
             </p>
           </div>
         )}
         {output && (
           <div className="self-end my-4 w-[50%]">
-            <p className="font-roboto bg-black/2 text-black rounded-3xl px-6 py-4 text-[14px]">
+            <p className="font-roboto bg-black/2 shadow-lg leading-8 text-black rounded-3xl px-6 py-4 text-[14px]">
               {output}
             </p>
           </div>
         )}
         {output && (
-          <div className="self-start bg-black/2 text-black font-roboto rounded-2xl px-6 py-4 my-4">
+          <div className="self-start bg-black/10 shadow-lg text-black font-roboto rounded-2xl px-6 py-4 my-4">
             <p className=" my-4">{`Your text is in ${lang}`}</p>
             <p className="mb-2">What will you like to do?</p>
             <div className="grid grid-cols-2 gap-4">
@@ -154,7 +154,7 @@ export default function Input({
       </div>
 
       <div className="flex items-center justify-center  w-full h-[550px] relative">
-        {/* <h3 className="">What text do you want to process?</h3> */}
+        <h3 className="z-50 ">What text do you want to process?</h3>
         <textarea
           className=" h-[150px] w-[50%] border border-black/20 shadow-xl p-6 rounded-4xl bottom-8 outline-none fixed z-50 bg-white "
           placeholder="Type or paste your text here"
