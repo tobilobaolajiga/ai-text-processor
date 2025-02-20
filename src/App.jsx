@@ -17,6 +17,7 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [count, setCount] = useState(0);
+  const [chatText, setChatText] = useState('');
 
   const translate = async (text, lang) => {
     const textOrigin = localStorage.getItem('inputChat');
@@ -307,6 +308,8 @@ export default function App() {
               error={error}
               count={count}
               setCount={setCount}
+              chatText={chatText}
+              setChatText={setChatText}
             />
           }
         />

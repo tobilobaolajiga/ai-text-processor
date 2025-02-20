@@ -15,9 +15,10 @@ export default function Input({
   error,
   count,
   setCount,
+  chatText,
+  setChatText,
 }) {
   const [translation, setTranslation] = useState(false);
-  const [chatText, setChatText] = useState('');
 
   useEffect(() => {
     setCount(count);
@@ -154,7 +155,6 @@ export default function Input({
       </div>
 
       <div className="flex items-center justify-center  w-full h-[550px] relative">
-        <h3 className="z-50 ">What text do you want to process?</h3>
         <textarea
           className=" h-[150px] w-[50%] border border-black/20 shadow-xl p-6 rounded-4xl bottom-8 outline-none fixed z-50 bg-white "
           placeholder="Type or paste your text here"
