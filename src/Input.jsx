@@ -140,7 +140,7 @@ export default function Input({
         )}
         {error && (
           <div className="flex items-center gap-2 self-start shadow-lg bg-[#00fa9a] font-roboto font-medium rounded-2xl px-6 py-4 my-4">
-            {count < 150 && summary && (
+            {count < 150 && (
               <p>
                 Your text has to be more than <span>150 words</span> to
                 summarize

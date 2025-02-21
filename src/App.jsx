@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 import { useState } from 'react';
 import Input from './Input';
 import Cover from './Cover';
@@ -104,7 +105,13 @@ export default function App() {
         setLoading(false);
         setCurrentLang('Turkish');
         setOutput(result);
+      } else if (lang != 'English' && currentLang != 'English') {
+        setOutput('No translation available');
       }
+    } else {
+      toast.error(
+        'Browser not compatible with Chrome Translator functionality'
+      );
     }
   };
 
@@ -259,6 +266,10 @@ export default function App() {
           break;
         }
       }
+    } else {
+      toast.error(
+        'Browser not compatible with Chrome Language Detection functionality'
+      );
     }
   };
   const summarizeText = async (text) => {
@@ -302,7 +313,9 @@ export default function App() {
         });
       }
     } else {
-      console.log('yeppppppppp');
+      toast.error(
+        'Browser not compatible with Chrome Summarizer functionality'
+      );
     }
   };
 
@@ -346,6 +359,7 @@ export default function App() {
           }
         />
       </Routes>
+      <ToastContainer position="top-right" autoClose={3000} />
     </Router>
   );
 }
