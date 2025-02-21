@@ -1,10 +1,11 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useState } from 'react';
-import { useEffect } from 'react';
 import Input from './Input';
 import Cover from './Cover';
-import { AnimatePresence, motion } from 'framer-motion';
 
+const detectorToken = import.meta.env.VITE_DETECTOR_TOKEN;
+const translatorToken = import.meta.env.VITE_TRANSLATOR_TOKEN;
+const summarizerToken = import.meta.env.VITE_SUMMARIZER_TOKEN;
 export default function App() {
   const [cover, setCover] = useState(true);
   const [input, setInput] = useState(false);
@@ -269,12 +270,6 @@ export default function App() {
       console.log('yeppppppppp');
     }
   };
-
-  // useEffect(() => {
-  //   translate(text, lang);
-  //   // detectLanguage(text);
-  //   summarizeText(text);
-  // }, [text, lang]);
 
   return (
     <Router>
