@@ -48,6 +48,9 @@ export default function Input({
   };
 
   const send = (text) => {
+    if (text == '') {
+      toast.error('Enter in some text');
+    }
     localStorage.setItem('inputChat', text);
     setChatText(localStorage.getItem('inputChat'));
     const textOrigin = localStorage.getItem('inputChat');
