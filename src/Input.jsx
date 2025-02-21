@@ -84,32 +84,34 @@ export default function Input({
               {chatText}
             </p>
 
-            <div className="self-start bg-[#00fa9a] font-roboto font-medium rounded-2xl shadow-lg px-6 py-4 my-4">
-              <p className=" my-4">{`Your text is in ${textLang}`}</p>
-              {languages.includes(textLang) && (
-                <>
-                  <p className="mb-2">What will you like to do?</p>
-                  <div className="grid grid-cols-2 gap-4 items-start">
-                    {textLang == 'English' && (
+            {textLang && (
+              <div className="self-start bg-[#00fa9a] font-roboto font-medium rounded-2xl shadow-lg px-6 py-4 my-4">
+                <p className=" my-4">{`Your text is in ${textLang}`}</p>
+                {languages.includes(textLang) && (
+                  <>
+                    <p className="mb-2">What will you like to do?</p>
+                    <div className="grid grid-cols-2 gap-4 items-start">
+                      {textLang == 'English' && (
+                        <button
+                          className="border rounded-xl p-2 cursor-pointer"
+                          onClick={() => {
+                            summarizeText(text);
+                          }}
+                        >
+                          Summarize
+                        </button>
+                      )}
                       <button
                         className="border rounded-xl p-2 cursor-pointer"
-                        onClick={() => {
-                          summarizeText(text);
-                        }}
+                        onClick={() => setTranslation(true)}
                       >
-                        Summarize
+                        Translate
                       </button>
-                    )}
-                    <button
-                      className="border rounded-xl p-2 cursor-pointer"
-                      onClick={() => setTranslation(true)}
-                    >
-                      Translate
-                    </button>
-                  </div>
-                </>
-              )}
-            </div>
+                    </div>
+                  </>
+                )}
+              </div>
+            )}
           </>
         )}
 

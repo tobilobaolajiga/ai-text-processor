@@ -14,7 +14,7 @@ export default function App() {
   const [output, setOutput] = useState('');
   const [lang, setLang] = useState('');
   const [currentLang, setCurrentLang] = useState('English');
-  const [textLang, setTextLang] = useState('English');
+  const [textLang, setTextLang] = useState('');
   const [summary, setSummary] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
