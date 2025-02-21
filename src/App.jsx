@@ -22,8 +22,6 @@ export default function App() {
   const [chatText, setChatText] = useState('');
 
   const translate = async (lang) => {
-    console.log(lang);
-    console.log(currentLang);
     const textOrigin = localStorage.getItem('inputChat');
 
     if ('ai' in self && 'translator' in self.ai) {
@@ -56,7 +54,7 @@ export default function App() {
           },
         });
         const result = await translator.translate(textOrigin);
-        console.log(result);
+
         setLoading(false);
         setCurrentLang('Russian');
         setOutput(result);
@@ -92,7 +90,7 @@ export default function App() {
         setOutput(result);
       } else if (lang == 'Turkish') {
         setLoading(true);
-        console.log('turk');
+
         const translator = await self.ai.translator.create({
           sourceLanguage: 'en',
           targetLanguage: 'tr',
@@ -115,8 +113,6 @@ export default function App() {
   };
 
   const translateBack = async () => {
-    console.log(lang);
-    console.log(currentLang);
     const textOrigin = localStorage.getItem('inputChat');
     if ('ai' in self && 'translator' in self.ai) {
       if (lang == 'English' && currentLang == 'French') {
@@ -165,7 +161,6 @@ export default function App() {
         setCurrentLang('English');
         setOutput(result);
       } else if (lang == 'English' && currentLang == 'Portugese') {
-        console.log('whoop');
         setLoading(true);
         const translator = await self.ai.translator.create({
           sourceLanguage: 'pt',
@@ -227,17 +222,18 @@ export default function App() {
       const canDetect = languageDetectorCapabilities.capabilities;
       let detector;
       if (canDetect === 'no') {
-        console.log('no');
+        // console.log('no');
+        toast.error('No Language Detector Capabilities');
         return;
       }
       if (canDetect === 'readily') {
-        console.log(textOrigin);
+        //console.log('readily');
         // The language detector can immediately be used.
         detector = await self.ai.languageDetector.create();
 
         // const text = 'Hallo und herzlich willkommen!';
         const results = await detector.detect(textOrigin);
-        console.log(results);
+        //console.log(results);
         let firstLang = null;
         for (const result of results) {
           firstLang = result.detectedLanguage;
@@ -246,18 +242,20 @@ export default function App() {
           break;
         }
       } else {
-        console.log(textOrigin);
+        //console.log(textOrigin);
         // The language detector can be used after model download.
+
         detector = await self.ai.languageDetector.create({
           monitor(m) {
             m.addEventListener('downloadprogress', (e) => {
+              toast.warn('Downloading Language Detector Capabilities');
               console.log(`Downloaded ${e.loaded} of ${e.total} bytes.`);
             });
           },
         });
 
         const results = await detector.detect(textOrigin);
-        console.log(results);
+
         let firstLang = null;
         for (const result of results) {
           firstLang = result.detectedLanguage;
@@ -293,6 +291,7 @@ export default function App() {
 
       let summarizer;
       if (available === 'no') {
+        toast.error('No Summarizer Capabilities');
         // The Summarizer API isn't usable.
         console.log('not available');
       }
@@ -309,8 +308,10 @@ export default function App() {
         setSummary(summary);
       } else {
         // The Summarizer API can be used after the model is downloaded.
+
         summarizer = await self.ai.summarizer.create(options);
         summarizer.addEventListener('downloadprogress', (e) => {
+          toast.warn('Downloading Capabilities');
           console.log(e.loaded, e.total);
         });
       }
