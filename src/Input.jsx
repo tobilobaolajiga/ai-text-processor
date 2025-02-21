@@ -59,7 +59,9 @@ export default function Input({
   };
 
   const sendKey = (e, text) => {
-    if (event.key === 'Enter') {
+    console.log(text);
+    if (e.key === 'Enter') {
+      setText(e.target.value);
       send(text);
     }
   };
@@ -149,7 +151,16 @@ export default function Input({
             </div>
           </div>
         )}
-
+        {/* {error && (
+          <div className="flex items-center gap-2 self-start shadow-lg bg-[#00fa9a] font-roboto font-medium rounded-2xl px-6 py-4 my-4">
+            {count < 150 && (
+              <p>
+                Your text has to be more than <span>150 words</span> to
+                summarize
+              </p>
+            )}
+          </div>
+        )} */}
         {loading && (
           <div className="flex space-x-2 self-end mx-[10%] my-4">
             <div className="w-3 h-3 bg-gray-500 rounded-full animate-bounce [animation-delay:0s]"></div>
@@ -186,7 +197,7 @@ export default function Input({
           onChange={(e) => setText(e.target.value)}
           onFocus={() => setIsFocused(true)}
           onKeyDown={() => {
-            send(text);
+            sendKey(text);
           }}
         ></textarea>
 
@@ -205,7 +216,7 @@ export default function Input({
             <path d="M13.0001 7.82843V20H11.0001V7.82843L5.63614 13.1924L4.22192 11.7782L12.0001 4L19.7783 11.7782L18.3641 13.1924L13.0001 7.82843Z"></path>
           </svg>
         </button>
-        {chatText && (
+        {text === '' && (
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"

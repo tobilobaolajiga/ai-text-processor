@@ -223,7 +223,9 @@ export default function App() {
       let detector;
       if (canDetect === 'no') {
         // console.log('no');
-        toast.error('No Language Detector Capabilities');
+        toast.error(
+          'Browser not compatible with Chrome Language Detection functionality'
+        );
         return;
       }
       if (canDetect === 'readily') {
@@ -233,7 +235,7 @@ export default function App() {
 
         // const text = 'Hallo und herzlich willkommen!';
         const results = await detector.detect(textOrigin);
-        //console.log(results);
+        console.log(results);
         let firstLang = null;
         for (const result of results) {
           firstLang = result.detectedLanguage;
@@ -242,20 +244,18 @@ export default function App() {
           break;
         }
       } else {
-        //console.log(textOrigin);
+        console.log(textOrigin);
         // The language detector can be used after model download.
-
         detector = await self.ai.languageDetector.create({
           monitor(m) {
             m.addEventListener('downloadprogress', (e) => {
-              toast.warn('Downloading Language Detector Capabilities');
               console.log(`Downloaded ${e.loaded} of ${e.total} bytes.`);
             });
           },
         });
 
         const results = await detector.detect(textOrigin);
-
+        console.log(results);
         let firstLang = null;
         for (const result of results) {
           firstLang = result.detectedLanguage;
@@ -291,7 +291,6 @@ export default function App() {
 
       let summarizer;
       if (available === 'no') {
-        toast.error('No Summarizer Capabilities');
         // The Summarizer API isn't usable.
         console.log('not available');
       }
@@ -308,10 +307,8 @@ export default function App() {
         setSummary(summary);
       } else {
         // The Summarizer API can be used after the model is downloaded.
-
         summarizer = await self.ai.summarizer.create(options);
         summarizer.addEventListener('downloadprogress', (e) => {
-          toast.warn('Downloading Capabilities');
           console.log(e.loaded, e.total);
         });
       }
