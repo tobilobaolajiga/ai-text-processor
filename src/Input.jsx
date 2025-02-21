@@ -57,6 +57,11 @@ export default function Input({
     console.log(languages.includes(textLang));
   };
 
+  const sendKey = (e, text) => {
+    if (event.key === 'Enter') {
+      send(text);
+    }
+  };
   const refresh = () => {
     setText('');
     setChatText('');
@@ -190,6 +195,9 @@ export default function Input({
           value={text}
           onChange={(e) => setText(e.target.value)}
           onFocus={() => setIsFocused(true)}
+          onKeyDown={() => {
+            send(text);
+          }}
         ></textarea>
 
         <button
