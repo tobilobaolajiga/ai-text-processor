@@ -21,138 +21,176 @@ export default function App() {
   const [chatText, setChatText] = useState('');
 
   const translate = async (lang) => {
+    console.log(lang);
+    console.log(currentLang);
     const textOrigin = localStorage.getItem('inputChat');
 
-    if (currentLang != 'French')
-      if ('ai' in self && 'translator' in self.ai) {
-        if (lang == 'French') {
-          if (textLang != 'English') {
-            setError(true);
-            return;
-          }
-          setLoading(true);
-          const translator = await self.ai.translator.create({
-            sourceLanguage: 'en',
-            targetLanguage: 'fr',
-          });
-          const result = await translator.translate(textOrigin);
-          setLoading(false);
-          setCurrentLang('French');
-          setOutput(result);
-        } else if (lang == 'Russian') {
-          if (textLang != 'English') {
-            setError(true);
-            return;
-          }
-          setLoading(true);
-          const translator = await self.ai.translator.create({
-            sourceLanguage: 'en',
-            targetLanguage: 'ru',
-          });
-          const result = await translator.translate(textOrigin);
-          console.log(result);
-          setLoading(false);
-          setCurrentLang('Russian');
-          setOutput(result);
-        } else if (lang == 'Spanish') {
-          if (textLang != 'English') {
-            setError(true);
-            return;
-          }
-          setLoading(true);
-          const translator = await self.ai.translator.create({
-            sourceLanguage: 'en',
-            targetLanguage: 'es',
-          });
-          const result = await translator.translate(textOrigin);
-          setLoading(false);
-          setCurrentLang('Spanish');
-          setOutput(result);
-        } else if (lang == 'Portugese') {
-          if (textLang != 'English') {
-            setError(true);
-            return;
-          }
-          setLoading(true);
-          const translator = await self.ai.translator.create({
-            sourceLanguage: 'en',
-            targetLanguage: 'pt',
-          });
-          const result = await translator.translate(textOrigin);
-          setLoading(false);
-          setCurrentLang('Portugese');
-          setOutput(result);
-        } else if (lang == 'Turkish') {
-          if (textLang != 'English') {
-            setError(true);
-            return;
-          }
-          setLoading(true);
-          const translator = await self.ai.translator.create({
-            sourceLanguage: 'en',
-            targetLanguage: 'tr',
-          });
-          const result = await translator.translate(textOrigin);
-          setLoading(false);
-          setCurrentLang('Turkish');
-          setOutput(result);
-        } else if (lang == 'English' && currentLang == 'French') {
-          setLoading(true);
-          const translator = await self.ai.translator.create({
-            sourceLanguage: 'fr',
-            targetLanguage: 'en',
-          });
-          const result = await translator.translate(textOrigin);
-          setLoading(false);
-          setCurrentLang('English');
-          setOutput(result);
-        } else if (lang == 'English' && currentLang == 'Spanish') {
-          setLoading(true);
-          const translator = await self.ai.translator.create({
-            sourceLanguage: 'es',
-            targetLanguage: 'en',
-          });
-          const result = await translator.translate(textOrigin);
-          setLoading(false);
-          setCurrentLang('English');
-          setOutput(result);
-        } else if (lang == 'English' && currentLang == 'Russian') {
-          setLoading(true);
-          const translator = await self.ai.translator.create({
-            sourceLanguage: 'ru',
-            targetLanguage: 'en',
-          });
-          const result = await translator.translate(textOrigin);
-          setLoading(false);
-          setCurrentLang('English');
-          setOutput(result);
-        } else if (lang == 'English' && currentLang == 'Portugese') {
-          setLoading(true);
-          const translator = await self.ai.translator.create({
-            sourceLanguage: 'pt',
-            targetLanguage: 'en',
-          });
-          const result = await translator.translate(textOrigin);
-          setLoading(false);
-          setCurrentLang('English');
-          setOutput(result);
-        }
+    if ('ai' in self && 'translator' in self.ai) {
+      if (lang == 'English') {
+        translateBack();
+      } else if (lang == 'French') {
+        setLoading(true);
+        const translator = await self.ai.translator.create({
+          sourceLanguage: 'en',
+          targetLanguage: 'fr',
+          monitor(m) {
+            m.addEventListener('downloadprogress', (e) => {
+              console.log(`Downloaded ${e.loaded} of ${e.total} bytes.`);
+            });
+          },
+        });
+        const result = await translator.translate(textOrigin);
+        setLoading(false);
+        setCurrentLang('French');
+        setOutput(result);
+      } else if (lang == 'Russian') {
+        setLoading(true);
+        const translator = await self.ai.translator.create({
+          sourceLanguage: 'en',
+          targetLanguage: 'ru',
+          monitor(m) {
+            m.addEventListener('downloadprogress', (e) => {
+              console.log(`Downloaded ${e.loaded} of ${e.total} bytes.`);
+            });
+          },
+        });
+        const result = await translator.translate(textOrigin);
+        console.log(result);
+        setLoading(false);
+        setCurrentLang('Russian');
+        setOutput(result);
+      } else if (lang == 'Spanish') {
+        setLoading(true);
+        const translator = await self.ai.translator.create({
+          sourceLanguage: 'en',
+          targetLanguage: 'es',
+          monitor(m) {
+            m.addEventListener('downloadprogress', (e) => {
+              console.log(`Downloaded ${e.loaded} of ${e.total} bytes.`);
+            });
+          },
+        });
+        const result = await translator.translate(textOrigin);
+        setLoading(false);
+        setCurrentLang('Spanish');
+        setOutput(result);
+      } else if (lang == 'Portugese') {
+        setLoading(true);
+        const translator = await self.ai.translator.create({
+          sourceLanguage: 'en',
+          targetLanguage: 'pt',
+          monitor(m) {
+            m.addEventListener('downloadprogress', (e) => {
+              console.log(`Downloaded ${e.loaded} of ${e.total} bytes.`);
+            });
+          },
+        });
+        const result = await translator.translate(textOrigin);
+        setLoading(false);
+        setCurrentLang('Portugese');
+        setOutput(result);
+      } else if (lang == 'Turkish') {
+        setLoading(true);
+        const translator = await self.ai.translator.create({
+          sourceLanguage: 'en',
+          targetLanguage: 'tr',
+          monitor(m) {
+            m.addEventListener('downloadprogress', (e) => {
+              console.log(`Downloaded ${e.loaded} of ${e.total} bytes.`);
+            });
+          },
+        });
+        const result = await translator.translate(textOrigin);
+        setLoading(false);
+        setCurrentLang('Turkish');
+        setOutput(result);
+      }
+    }
+  };
+
+  const translateBack = async () => {
+    const textOrigin = localStorage.getItem('inputChat');
+    if ('ai' in self && 'translator' in self.ai) {
+      if (lang == 'English' && currentLang == 'French') {
+        setLoading(true);
+        const translator = await self.ai.translator.create({
+          sourceLanguage: 'fr',
+          targetLanguage: 'en',
+          monitor(m) {
+            m.addEventListener('downloadprogress', (e) => {
+              console.log(`Downloaded ${e.loaded} of ${e.total} bytes.`);
+            });
+          },
+        });
+        const result = await translator.translate(textOrigin);
+        setLoading(false);
+        setCurrentLang('English');
+        setOutput(result);
+      } else if (lang == 'English' && currentLang == 'Spanish') {
+        setLoading(true);
+        const translator = await self.ai.translator.create({
+          sourceLanguage: 'es',
+          targetLanguage: 'en',
+          monitor(m) {
+            m.addEventListener('downloadprogress', (e) => {
+              console.log(`Downloaded ${e.loaded} of ${e.total} bytes.`);
+            });
+          },
+        });
+        const result = await translator.translate(textOrigin);
+        setLoading(false);
+        setCurrentLang('English');
+        setOutput(result);
+      } else if (lang == 'English' && currentLang == 'Russian') {
+        setLoading(true);
+        const translator = await self.ai.translator.create({
+          sourceLanguage: 'ru',
+          targetLanguage: 'en',
+          monitor(m) {
+            m.addEventListener('downloadprogress', (e) => {
+              console.log(`Downloaded ${e.loaded} of ${e.total} bytes.`);
+            });
+          },
+        });
+        const result = await translator.translate(textOrigin);
+        setLoading(false);
+        setCurrentLang('English');
+        setOutput(result);
+      } else if (lang == 'English' && currentLang == 'Portugese') {
+        setLoading(true);
+        const translator = await self.ai.translator.create({
+          sourceLanguage: 'pt',
+          targetLanguage: 'en',
+          monitor(m) {
+            m.addEventListener('downloadprogress', (e) => {
+              console.log(`Downloaded ${e.loaded} of ${e.total} bytes.`);
+            });
+          },
+        });
+        const result = await translator.translate(textOrigin);
+        setLoading(false);
+        setCurrentLang('English');
+        setOutput(result);
       } else if (lang == 'English' && currentLang == 'Turkish') {
-        console.log('yes');
         setLoading(true);
         const translator = await self.ai.translator.create({
           sourceLanguage: 'tr',
           targetLanguage: 'en',
+          monitor(m) {
+            m.addEventListener('downloadprogress', (e) => {
+              console.log(`Downloaded ${e.loaded} of ${e.total} bytes.`);
+            });
+          },
         });
         const result = await translator.translate(textOrigin);
         setLoading(false);
         setCurrentLang('English');
         setOutput(result);
       } else {
-        setError('Translation not available');
+        setError(true);
       }
+    }
   };
-
   const detectLanguage = async () => {
     const languageMap = {
       en: 'English',
@@ -180,8 +218,6 @@ export default function App() {
       const canDetect = languageDetectorCapabilities.capabilities;
       let detector;
       if (canDetect === 'no') {
-        // The language detector isn't usable.
-
         console.log('no');
         return;
       }
@@ -211,7 +247,6 @@ export default function App() {
           },
         });
 
-        // const text = 'Hallo und herzlich willkommen!';
         const results = await detector.detect(textOrigin);
         console.log(results);
         let firstLang = null;

@@ -19,6 +19,7 @@ export default function Input({
   setCount,
   chatText,
   setChatText,
+  currentLang,
 }) {
   const [translation, setTranslation] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
@@ -52,6 +53,7 @@ export default function Input({
     countWords(textOrigin);
     detectLanguage(textOrigin);
     setText('');
+    console.log(languages.includes(textLang));
   };
 
   const refresh = () => {
@@ -138,12 +140,13 @@ export default function Input({
         )}
         {error && (
           <div className="flex items-center gap-2 self-start shadow-lg bg-[#00fa9a] font-roboto font-medium rounded-2xl px-6 py-4 my-4">
-            {count < 150 && textLang == 'English' ? (
+            {count < 150 && summary && (
               <p>
                 Your text has to be more than <span>150 words</span> to
                 summarize
               </p>
-            ) : (
+            )}
+            {translation && textLang != 'English' && lang != 'English' && (
               <p>There is no translation available in this language</p>
             )}
           </div>
