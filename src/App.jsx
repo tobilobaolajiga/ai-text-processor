@@ -355,6 +355,7 @@ export default function App() {
               setChatText={setChatText}
               setError={setError}
               setOutput={setOutput}
+              setLoading={setLoading}
             />
           }
         />

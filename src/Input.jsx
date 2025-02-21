@@ -4,6 +4,7 @@ export default function Input({
   text,
   setText,
   setError,
+  setLoading,
   setOutput,
   output,
   lang,
@@ -61,6 +62,7 @@ export default function Input({
     setChatText('');
     localStorage.removeItem('inputChat');
     setTranslation(false);
+    setLoading(false);
     setOutput(false);
     setError(false);
   };
