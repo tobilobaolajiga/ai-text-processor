@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 export default function Input({
   text,
   setText,
-  setError,
+
   setLoading,
   setOutput,
   output,
@@ -16,7 +16,7 @@ export default function Input({
   textLang,
   summary,
   loading,
-  error,
+
   count,
   setCount,
   chatText,
@@ -38,7 +38,7 @@ export default function Input({
   useEffect(() => {
     setCount(count);
     setText(text);
-  }, [text, lang, chatText, output]);
+  }, [text, lang]);
 
   const countWords = (input) => {
     const inputt = localStorage.getItem('inputChat');
@@ -70,12 +70,11 @@ export default function Input({
     setTranslation(false);
     setLoading(false);
     setOutput(false);
-    setError(false);
   };
 
-  const trans = (lang) => {
+  const trans = (lang, textLang) => {
     const textOrigin = localStorage.getItem('inputChat');
-    if (lang != 'English' && currentLang != 'English') {
+    if (lang != 'English' && textLang != 'English') {
       toast.error('No translation available');
     } else {
       translate(lang);
@@ -97,29 +96,27 @@ export default function Input({
             {textLang && (
               <div className="self-start bg-[#00fa9a] font-roboto font-medium rounded-2xl shadow-lg px-6 py-4 my-4">
                 <p className=" my-4">{`Your text is in ${textLang}`}</p>
-                {languages.includes(textLang) && (
-                  <>
-                    <p className="mb-2">What will you like to do?</p>
-                    <div className="grid grid-cols-2 gap-4 items-start">
-                      {textLang == 'English' && (
-                        <button
-                          className="border rounded-xl p-2 cursor-pointer"
-                          onClick={() => {
-                            summarizeText(text);
-                          }}
-                        >
-                          Summarize
-                        </button>
-                      )}
+                <>
+                  <p className="mb-2">What will you like to do?</p>
+                  <div className="grid grid-cols-2 gap-4 items-start">
+                    {textLang == 'English' && (
                       <button
                         className="border rounded-xl p-2 cursor-pointer"
-                        onClick={() => setTranslation(true)}
+                        onClick={() => {
+                          summarizeText(text);
+                        }}
                       >
-                        Translate
+                        Summarize
                       </button>
-                    </div>
-                  </>
-                )}
+                    )}
+                    <button
+                      className="border rounded-xl p-2 cursor-pointer"
+                      onClick={() => setTranslation(true)}
+                    >
+                      Translate
+                    </button>
+                  </div>
+                </>
               </div>
             )}
           </>
@@ -145,23 +142,14 @@ export default function Input({
             <div className="flex items-center justify-center my-4">
               <button
                 className="border rounded-xl px-2 py-[4px] cursor-pointer"
-                onClick={() => trans(lang)}
+                onClick={() => trans(lang, textLang)}
               >
                 Translate
               </button>
             </div>
           </div>
         )}
-        {/* {error && (
-          <div className="flex items-center gap-2 self-start shadow-lg bg-[#00fa9a] font-roboto font-medium rounded-2xl px-6 py-4 my-4">
-            {count < 150 && (
-              <p>
-                Your text has to be more than <span>150 words</span> to
-                summarize
-              </p>
-            )}
-          </div>
-        )} */}
+
         {loading && (
           <div className="flex space-x-2 self-end mx-[10%] my-4">
             <div className="w-3 h-3 bg-gray-500 rounded-full animate-bounce [animation-delay:0s]"></div>
@@ -217,7 +205,7 @@ export default function Input({
             <path d="M13.0001 7.82843V20H11.0001V7.82843L5.63614 13.1924L4.22192 11.7782L12.0001 4L19.7783 11.7782L18.3641 13.1924L13.0001 7.82843Z"></path>
           </svg>
         </button>
-        {text == '' && (
+        {chatText && (
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"

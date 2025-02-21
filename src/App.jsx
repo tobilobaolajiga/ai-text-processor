@@ -17,7 +17,7 @@ export default function App() {
   const [textLang, setTextLang] = useState('');
   const [summary, setSummary] = useState('');
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+
   const [count, setCount] = useState(0);
   const [chatText, setChatText] = useState('');
 
@@ -115,6 +115,8 @@ export default function App() {
   };
 
   const translateBack = async () => {
+    console.log(lang);
+    console.log(currentLang);
     const textOrigin = localStorage.getItem('inputChat');
     if ('ai' in self && 'translator' in self.ai) {
       if (lang == 'English' && currentLang == 'French') {
@@ -163,6 +165,7 @@ export default function App() {
         setCurrentLang('English');
         setOutput(result);
       } else if (lang == 'English' && currentLang == 'Portugese') {
+        console.log('whoop');
         setLoading(true);
         const translator = await self.ai.translator.create({
           sourceLanguage: 'pt',
@@ -193,7 +196,7 @@ export default function App() {
         setCurrentLang('English');
         setOutput(result);
       } else {
-        setError(true);
+        toast.error('Translation not available');
       }
     }
   };
@@ -347,12 +350,10 @@ export default function App() {
               textLang={textLang}
               summary={summary}
               loading={loading}
-              error={error}
               count={count}
               setCount={setCount}
               chatText={chatText}
               setChatText={setChatText}
-              setError={setError}
               setOutput={setOutput}
               setLoading={setLoading}
             />
