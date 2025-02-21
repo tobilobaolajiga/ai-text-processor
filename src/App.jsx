@@ -360,7 +360,13 @@ export default function App() {
           }
         />
       </Routes>
-      <ToastContainer position="top-right" autoClose={3000} />
+      <ToastContainer
+        position="top-center"
+        aria-label="assertive"
+        role="alert"
+        closeOnClick
+        hideProgressBar="true"
+      />
     </Router>
   );
 }
