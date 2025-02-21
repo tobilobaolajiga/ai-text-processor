@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 export default function Input({
   text,
   setText,
@@ -34,7 +35,7 @@ export default function Input({
     'Russian',
   ];
   const chatRef = useRef(null);
-
+  const navigate = useNavigate();
   useEffect(() => {
     setCount(count);
     setText(text);
@@ -87,10 +88,23 @@ export default function Input({
       className="bg-white/90 text-black/80 h-[450px] w-full overflow-auto styled-scrollbar"
       ref={chatRef}
     >
+      <button
+        className="bg-black border rounded-full w-[50px] h-[50px] fixed top-[3%] left-[3%] cursor-pointer z-50 hidden sm:block"
+        onClick={() => navigate('/')}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="white"
+          className="absolute bottom-[20%] right-[18%] w-[30px] "
+        >
+          <path d="M7.82843 10.9999H20V12.9999H7.82843L13.1924 18.3638L11.7782 19.778L4 11.9999L11.7782 4.22168L13.1924 5.63589L7.82843 10.9999Z"></path>
+        </svg>
+      </button>
       <div className="p-4 flex flex-col items-center justify-center py-[5%] mx-[10%] ">
         {chatText && (
           <>
-            <p className="self-end font-roboto bg-[#f0fff0] shadow-lg rounded-3xl px-6 py-4 w-[80%] sm:w-[50%] text-[14px] leading-8">
+            <p className="self-end font-roboto bg-[#f0fff0] shadow-lg rounded-2xl px-6 py-4 w-[80%] sm:w-[50%] text-[14px] leading-8">
               {chatText}
             </p>
 
