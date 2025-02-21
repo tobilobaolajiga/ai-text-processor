@@ -180,7 +180,7 @@ export default function Input({
 
       <div className="flex items-center justify-center  w-full h-[550px] relative">
         {text == '' && (
-          <h3 className="font-bold font-roboto text-3xl -mb-4 fixed">
+          <h3 className="font-bold font-roboto text-xl sm:text-3xl -mb-4 fixed">
             What text would you like to process today?
           </h3>
         )}
