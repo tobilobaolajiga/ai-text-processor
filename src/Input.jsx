@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 export default function Input({
   text,
   setText,
-
   setLoading,
   setOutput,
   output,
@@ -17,7 +16,6 @@ export default function Input({
   textLang,
   summary,
   loading,
-
   count,
   setCount,
   chatText,
@@ -56,12 +54,12 @@ export default function Input({
     countWords(textOrigin);
     detectLanguage(textOrigin);
     setText('');
-    console.log(languages.includes(textLang));
+    console.log(text);
   };
 
-  const sendKey = (e, text) => {
-    console.log(e);
-    if (e.key === 'Enter') {
+  const sendKey = (e) => {
+    if (e.key == 'Enter') {
+      console.log('event');
       send(text);
     }
   };
@@ -199,8 +197,8 @@ export default function Input({
           placeholder="Type or paste your text here"
           value={text}
           onChange={(e) => setText(e.target.value)}
+          onKeyDown={(e) => sendKey(e)}
           onFocus={() => setIsFocused(true)}
-          onKeyDown={sendKey(text)}
         ></textarea>
 
         <button
@@ -218,7 +216,7 @@ export default function Input({
             <path d="M13.0001 7.82843V20H11.0001V7.82843L5.63614 13.1924L4.22192 11.7782L12.0001 4L19.7783 11.7782L18.3641 13.1924L13.0001 7.82843Z"></path>
           </svg>
         </button>
-        {!text && (
+        {chatText && (
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
