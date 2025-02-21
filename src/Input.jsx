@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
+import { toast } from 'react-toastify';
 export default function Input({
   text,
   setText,
@@ -74,7 +75,11 @@ export default function Input({
 
   const trans = (lang) => {
     const textOrigin = localStorage.getItem('inputChat');
-    translate(lang);
+    if (lang != 'English' && currentLang != 'English') {
+      toast.error('No translation available');
+    } else {
+      translate(lang);
+    }
     console.log(textOrigin, lang);
   };
   return (
@@ -147,7 +152,7 @@ export default function Input({
             </div>
           </div>
         )}
-        {error && (
+        {/* {error && (
           <div className="flex items-center gap-2 self-start shadow-lg bg-[#00fa9a] font-roboto font-medium rounded-2xl px-6 py-4 my-4">
             {count < 150 && (
               <p>
@@ -155,11 +160,8 @@ export default function Input({
                 summarize
               </p>
             )}
-            {translation && textLang != 'English' && lang != 'English' && (
-              <p>There is no translation available in this language</p>
-            )}
           </div>
-        )}
+        )} */}
         {loading && (
           <div className="flex space-x-2 self-end mx-[10%] my-4">
             <div className="w-3 h-3 bg-gray-500 rounded-full animate-bounce [animation-delay:0s]"></div>

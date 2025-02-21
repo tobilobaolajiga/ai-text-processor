@@ -92,6 +92,7 @@ export default function App() {
         setOutput(result);
       } else if (lang == 'Turkish') {
         setLoading(true);
+        console.log('turk');
         const translator = await self.ai.translator.create({
           sourceLanguage: 'en',
           targetLanguage: 'tr',
@@ -105,8 +106,6 @@ export default function App() {
         setLoading(false);
         setCurrentLang('Turkish');
         setOutput(result);
-      } else if (lang != 'English' && currentLang != 'English') {
-        setOutput('No translation available');
       }
     } else {
       toast.error(
@@ -275,7 +274,7 @@ export default function App() {
   const summarizeText = async (text) => {
     console.log(count);
     if (count < 150) {
-      setError(true);
+      toast.error('Text has to be more than 150 words to summarize');
       return;
     }
     setLoading(true);
