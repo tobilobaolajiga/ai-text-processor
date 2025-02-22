@@ -272,6 +272,7 @@ export default function App() {
       );
     }
   };
+
   const summarizeText = async (text) => {
     console.log(count);
     if (count < 150) {
@@ -311,6 +312,12 @@ export default function App() {
         summarizer.addEventListener('downloadprogress', (e) => {
           console.log(e.loaded, e.total);
         });
+        const summary = await summarizer.summarize(text, {
+          context: 'This article is intended for a tech-savvy audience.',
+        });
+        console.log(summary);
+        setLoading(false);
+        setSummary(summary);
       }
     } else {
       toast.error(
