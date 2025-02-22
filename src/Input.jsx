@@ -50,6 +50,7 @@ export default function Input({
   const send = (text) => {
     if (text == '') {
       toast.error('Enter in some text');
+      return;
     }
     localStorage.setItem('inputChat', text);
     setChatText(localStorage.getItem('inputChat'));
@@ -71,6 +72,7 @@ export default function Input({
     setChatText('');
     localStorage.removeItem('inputChat');
     setTranslation(false);
+    setLang('');
     setLoading(false);
     setOutput(false);
   };
