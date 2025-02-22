@@ -282,10 +282,10 @@ export default function App() {
     setLoading(true);
     if ('ai' in self && 'summarizer' in self.ai) {
       const options = {
-        sharedContext: 'This is a scientific article',
-        type: 'headline',
-        format: 'plain-text',
-        length: 'short',
+        sharedContext: 'This is an article',
+        type: 'key-points',
+        format: 'markdown',
+        length: 'long',
       };
 
       const available = (await self.ai.summarizer.capabilities()).available;
@@ -301,7 +301,7 @@ export default function App() {
         console.log('available');
         console.log(summarizer);
         const summary = await summarizer.summarize(text, {
-          context: 'This article is intended for a tech-savvy audience.',
+          context: 'This is an article',
         });
         console.log(summary);
         setLoading(false);
@@ -313,7 +313,7 @@ export default function App() {
           console.log(e.loaded, e.total);
         });
         const summary = await summarizer.summarize(text, {
-          context: 'This article is intended for a tech-savvy audience.',
+          context: 'This is an article',
         });
         console.log(summary);
         setLoading(false);
