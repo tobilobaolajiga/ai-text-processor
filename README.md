@@ -20,7 +20,7 @@ https://hng-stage-4-ai-interface.vercel.app/
 
 ## 📦 Installation
 ```bash
-git clone https://github.com/tobilobaolajiga/hng-stage-4-ai-interface.git
-cd  hng-stage-4-ai-interface
+git clone https://github.com/tobilobaolajiga/ai-text-processor.git
+cd  ai-text-processor
 npm install
 npm run dev
