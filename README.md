@@ -1,8 +1,26 @@
-# React + Vite
+# Project Name
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An AI text-processing platform that is able to accept an input text and process it according to the needs of the user.
 
-Currently, two official plugins are available:
+## 📸 Demo
+https://hng-stage-4-ai-interface.vercel.app/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Features
+- Detect text language via Google Language Detector API
+- Translate text to a selected language using Google Translator API
+- Summarize text with Google Summarizer API
+
+## 🛠️ Tech Stack
+- Frontend: React JS, TailwindCSS
+
+## 🔌 APIs & Integrations
+- Google Language Detector API for language detection
+- Google Translator API for text translation
+- Google Summarizer API for text summarization
+
+## 📦 Installation
+```bash
+git clone https://github.com/tobilobaolajiga/hng-stage-4-ai-interface.git
+cd  hng-stage-4-ai-interface
+npm install
+npm run dev
